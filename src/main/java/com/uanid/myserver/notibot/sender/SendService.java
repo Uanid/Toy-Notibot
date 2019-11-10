@@ -35,7 +35,7 @@ public class SendService {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
 
-        String text = String.format(R.TELEGRAM_MESSAGE_FORMAT, noti.getChannel().getName(), noti.getBuildNumber(), noti.getWhy(), noti.getWho(), noti.getRegTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        String text = String.format(R.TELEGRAM_MESSAGE_FORMAT, noti.getChannel().getName(), noti.getBuildNumber(), noti.getWhy(), noti.getWho(), noti.getRegTime().format(DateTimeFormatter.BASIC_ISO_DATE));
         message.setText(text);
         return message;
     }
