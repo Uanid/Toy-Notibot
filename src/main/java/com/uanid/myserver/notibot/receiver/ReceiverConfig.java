@@ -1,4 +1,4 @@
-package com.uanid.myserver.notibot;
+package com.uanid.myserver.notibot.receiver;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.Properties;
  */
 @Slf4j
 @Configuration
-public class ImapConfig {
+public class ReceiverConfig {
 
     @Value("${imap.url}")
     private String mailReceiveUrl;
@@ -35,7 +35,6 @@ public class ImapConfig {
         imapChannelAdapter.setAutoStartup(true);
         imapChannelAdapter.setShouldReconnectAutomatically(true);
         imapChannelAdapter.setOutputChannel(receiveChannel());
-        log.info("메일 연결 완료");
         return imapChannelAdapter;
     }
 
