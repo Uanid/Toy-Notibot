@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author uanid
  * @since 2019-11-10
@@ -33,7 +35,7 @@ public class SendService {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
 
-        String text = String.format(R.TELEGRAM_MESSAGE_FORMAT, noti.getChannel().getName(), noti.getBuildNumber(), noti.getWhy(), noti.getWho(), noti.getRegTime().toString());
+        String text = String.format(R.TELEGRAM_MESSAGE_FORMAT, noti.getChannel().getName(), noti.getBuildNumber(), noti.getWhy(), noti.getWho(), noti.getRegTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
         message.setText(text);
         return message;
     }
