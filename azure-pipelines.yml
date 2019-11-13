@@ -22,9 +22,15 @@ stages:
         - task: Maven@3
           inputs:
             mavenPomFile: 'pom.xml'
-            mavenOptions: '-Xmx3072m'
-            jdkVersionOption: '1.8'
-            jdkArchitectureOption: 'x64'
+            goals: 'clean package deploy'
             publishJUnitResults: true
             testResultsFiles: '**/surefire-reports/TEST-*.xml'
-            goals: 'clean package deploy'
+            javaHomeOption: 'Path'
+            jdkDirectory: '/usr/bin/java'
+            mavenVersionOption: 'Path'
+            mavenDirectory: '/usr/bin/mvn'
+            mavenSetM2Home: false
+            mavenOptions: '-Xmx3072m'
+            mavenAuthenticateFeed: false
+            effectivePomSkip: false
+            sonarQubeRunAnalysis: false
