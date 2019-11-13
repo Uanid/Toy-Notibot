@@ -23,6 +23,4 @@ stages:
         inputs:
           script: |
             echo "Write your commands here"
-            pwd 
-            ls -al
-            mvn clean package deploy
+            mvn clean 
