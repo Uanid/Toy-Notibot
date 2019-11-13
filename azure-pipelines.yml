@@ -25,8 +25,8 @@ stages:
             goals: 'clean package deploy'
             publishJUnitResults: true
             testResultsFiles: '**/surefire-reports/TEST-*.xml'
-            javaHomeOption: 'Path'
-            jdkDirectory: '/usr/lib/jvm/java-8-openjdk-amd64/jdk'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.8'
             mavenVersionOption: 'Path'
             mavenDirectory: '/usr'
             mavenSetM2Home: false
