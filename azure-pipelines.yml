@@ -19,18 +19,10 @@ stages:
         image: docker.pkg.github.com/uanid/myserver/my-maven:latest
         endpoint: Github-MyServer-Registry
       steps:
-        - task: Maven@3
-          inputs:
-            mavenPomFile: 'pom.xml'
-            goals: 'clean package deploy'
-            publishJUnitResults: true
-            testResultsFiles: '**/surefire-reports/TEST-*.xml'
-            javaHomeOption: 'Path'
-            jdkDirectory: '/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java'
-            mavenVersionOption: 'Path'
-            mavenDirectory: '/usr'
-            mavenSetM2Home: false
-            mavenOptions: '-Xmx3072m'
-            mavenAuthenticateFeed: false
-            effectivePomSkip: false
-            sonarQubeRunAnalysis: false
+      - task: CmdLine@2
+        inputs:
+          script: |
+            echo "Write your commands here"
+            pwd 
+            ls -al
+            mvn clean package deploy
