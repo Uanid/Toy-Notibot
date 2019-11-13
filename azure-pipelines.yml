@@ -26,7 +26,7 @@ stages:
             publishJUnitResults: true
             testResultsFiles: '**/surefire-reports/TEST-*.xml'
             javaHomeOption: 'Path'
-            jdkDirectory: '/usr/lib/jvm/java-8-openjdk-amd64/jre'
+            jdkDirectory: '/usr/lib/jvm/java-8-openjdk-amd64/jdk'
             mavenVersionOption: 'Path'
             mavenDirectory: '/usr'
             mavenSetM2Home: false
