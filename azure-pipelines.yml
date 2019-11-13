@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  configuration: debug
+
 stages:
   - stage: Build_Stage
     displayName: My First Build Stage
