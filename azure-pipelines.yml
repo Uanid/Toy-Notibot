@@ -16,11 +16,12 @@ stages:
     - job: Build_Job
       displayName: My First Build Job
       container:
-        image: docker.pkg.github.com/uanid/myserver/my-maven:latest
+        image: docker.pkg.github.com/uanid/myserver/my-maven:8
         endpoint: Github-MyServer-Registry
       steps:
       - task: CmdLine@2
         inputs:
           script: |
+            cat /usr/share/maven/ref/settings.xml
             echo "Write your commands here"
             mvn clean package deploy
