@@ -25,4 +25,4 @@ stages:
           script: |
             id
             echo "Write your commands here"
-            mvn -s /usr/share/maven/ref/settings.xml clean package deploy
+            mvn -e -X -s /usr/share/maven/ref/settings.xml clean package deploy
