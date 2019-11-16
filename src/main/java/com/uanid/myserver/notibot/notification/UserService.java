@@ -30,6 +30,14 @@ public class UserService {
         return userRepository.findByChatId(chatId);
     }
 
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void unsubscribeChannel(User user, NotiChannel notiChannel) {
+        userRepository.deleteSubscribeChannel(user.getUserId(), notiChannel.getChannelId());
+    }
+
     public void updateUser(long chatId, String firstName, String lastName) {
         User user = getUser(chatId);
         user.setFirstName(firstName);
@@ -51,16 +59,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @Transactional
-    public void addSubChannel(long chatId, String channelName) {
-        NotiChannel channel = notiChannelService.getOrCreateChannel(channelName);
-        User user = getUser(chatId);
-        if (user.getSubscribeChannel() == null) {
-            user.setSubscribeChannel(new ArrayList<>());
-        }
-        user.getSubscribeChannel().add(channel);
-        log.warn("채널 구독 " + user.toString() + "/" + channel.toString());
-        userRepository.save(user);
+    public void addSubChannel(User user, NotiChannel notiChannel) {
+        userRepository.addSubscribeChannel(user.getUserId(), notiChannel.getChannelId());
     }
 
     public List<User> getSubscribedUsers(NotiChannel notiChannel) {

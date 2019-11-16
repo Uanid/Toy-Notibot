@@ -35,6 +35,8 @@ public class User {
     @CreationTimestamp
     private LocalDateTime regTime;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<NotiChannel> subscribeChannel;
+
+    private boolean isSubAllChannel;
 }
