@@ -1,5 +1,6 @@
 package com.uanid.myserver.notibot.sender;
 
+import com.uanid.myserver.notibot.sender.SenderService;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ public class SenderConfig extends AsyncConfigurerSupport {
     @Autowired
     private SenderService sendService;
 
-    @Bean
+    @Bean("SenderExecutor")
     public Executor senderExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setMaxPoolSize(16);

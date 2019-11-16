@@ -4,6 +4,7 @@ import com.uanid.myserver.notibot.R;
 import com.uanid.myserver.notibot.notification.UserService;
 import com.uanid.myserver.notibot.notification.domain.Notification;
 import com.uanid.myserver.notibot.notification.domain.User;
+import com.uanid.myserver.notibot.sender.telegram.TelegramMessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -24,7 +25,7 @@ import java.util.List;
 public class SenderService {
 
     @Autowired
-    private TelegramMessageBot telegramMessageBot;
+    private TelegramMessageHandler telegramMessageHandler;
 
     @Autowired
     private UserService userService;
@@ -40,7 +41,7 @@ public class SenderService {
     public void sendMessage(User user, Notification notification) {
         SendMessage message = buildTelegramMessage(user.getChatId(), notification);
         try {
-            telegramMessageBot.execute(message);
+            telegramMessageHandler.execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
