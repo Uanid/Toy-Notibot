@@ -1,8 +1,11 @@
-package com.uanid.myserver.notibot.receiver;
+package com.uanid.myserver.notibot.receiver.bamboo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.channel.DirectChannel;
@@ -18,19 +21,21 @@ import java.util.Properties;
  */
 @Slf4j
 @Configuration
-public class ReceiverConfig {
+@ConditionalOnProperty(prefix = "receiver.bamboo", name = "enable", havingValue = "true", matchIfMissing = false)
+public class MailConfig {
 
-    @Value("${imap.url}")
+    @Value("${receiver.bamboo.imap-url}")
     private String mailReceiveUrl;
+
+    @Value("${receiver.bamboo.scan-interval:10}")
+    private int scanInterval;
 
     @Autowired
     private MailReceiveHandler mailReceiveHandler;
 
-    @Value("${imap.scan.interval:10}")
-    private int scanInterval;
-
     @Bean("customAdapter")
     public ImapIdleChannelAdapter customAdapter() {
+        log.warn("메일 확인 리시버 활성화");
         ImapIdleChannelAdapter imapChannelAdapter = new ImapIdleChannelAdapter(imapReceiver());
         imapChannelAdapter.setAutoStartup(true);
         imapChannelAdapter.setShouldReconnectAutomatically(true);
