@@ -26,18 +26,22 @@ public class UserService {
     @Autowired
     private NotiChannelService notiChannelService;
 
-    public User getOrCreateUser(long chatId) {
-        User user = userRepository.findByChatId(chatId);
-        if (user == null) {
-            user = registerNewUser(chatId, null);
-            log.warn("신규 유저 등록 " + user.toString());
-        }
-        return user;
+    public User getUser(long chatId) {
+        return userRepository.findByChatId(chatId);
     }
 
-    public User registerNewUser(long chatId, List<String> subscribeChannel) {
+    public void updateUser(long chatId, String firstName, String lastName) {
+        User user = getUser(chatId);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        userRepository.save(user);
+    }
+
+    public User registerNewUser(long chatId, String firstName, String lastName, List<String> subscribeChannel) {
         User user = new User();
         user.setChatId(chatId);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
 
         if (subscribeChannel != null) {
             List<NotiChannel> channels = subscribeChannel.stream().map(notiChannelService::getOrCreateChannel).collect(Collectors.toList());
@@ -50,7 +54,7 @@ public class UserService {
     @Transactional
     public void addSubChannel(long chatId, String channelName) {
         NotiChannel channel = notiChannelService.getOrCreateChannel(channelName);
-        User user = getOrCreateUser(chatId);
+        User user = getUser(chatId);
         if (user.getSubscribeChannel() == null) {
             user.setSubscribeChannel(new ArrayList<>());
         }

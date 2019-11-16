@@ -24,7 +24,7 @@ public class NotiChannel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long seq;
+    private long channelId;
 
     @Column(length = 100, nullable = false)
     private String name;
@@ -36,7 +36,7 @@ public class NotiChannel {
     private List<Notification> notifications = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Map<User, Notification> notifiedSeq = new HashMap<>();
+    private Map<User, Notification> notifiedStatus = new HashMap<>();
 
     public NotiChannel() {
     }
