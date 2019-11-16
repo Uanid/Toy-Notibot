@@ -23,6 +23,7 @@ stages:
       - task: CmdLine@2
         inputs:
           script: |
+            apt-get install sudo -y
             sudo id
             echo "Write your commands here"
             # mvn -e -X -s /usr/share/maven/ref/settings.xml clean package deploy
