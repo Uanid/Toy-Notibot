@@ -26,4 +26,4 @@ stages:
             # su
             # sudo id
             echo "Write your commands here"
-            mvn -s /usr/share/maven/ref/settings.xml clean package deploy
+            mvn -X -s /usr/share/maven/ref/settings.xml clean package deploy
