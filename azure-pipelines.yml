@@ -22,6 +22,6 @@ stages:
       - task: CmdLine@2
         inputs:
           script: |
-            cat /usr/share/maven/ref/settings.xml
+            id
             echo "Write your commands here"
-            mvn clean package deploy
+            # mvn clean package deploy
