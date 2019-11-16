@@ -1,5 +1,6 @@
 package com.uanid.myserver.notibot.notification.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author uanid
@@ -21,11 +24,23 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Setter(AccessLevel.NONE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private NotiChannel channel;
 
-    @Column(length = 100)
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "char(32)")
+    private NotificationType notificationType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "noti_source", columnDefinition = "char(32)")
+    private ReceiverType receiverType;
+
+    @Column(length = 512)
     private String who;
+
+    @Column(length = 512)
+    private String committedWho;
 
     @Column(length = 100)
     private String why;
@@ -38,4 +53,9 @@ public class Notification {
 
     @CreationTimestamp
     private LocalDateTime regTime;
+
+    public void setChannel(NotiChannel notiChannel) {
+        this.channel = notiChannel;
+        notiChannel.getNotifications().add(this);
+    }
 }

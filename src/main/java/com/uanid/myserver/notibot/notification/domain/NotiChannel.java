@@ -7,6 +7,10 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author uanid
@@ -15,7 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "notifications")
 public class NotiChannel {
 
     @Id
@@ -27,6 +31,12 @@ public class NotiChannel {
 
     @CreationTimestamp
     private LocalDateTime regTime;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "channel", cascade = CascadeType.PERSIST)
+    private List<Notification> notifications = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Map<User, Notification> notifiedSeq = new HashMap<>();
 
     public NotiChannel() {
     }

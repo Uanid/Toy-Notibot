@@ -24,6 +24,6 @@ public class User {
     @Column(nullable = false)
     private long chatId;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<NotiChannel> subscribeChannel;
 }
