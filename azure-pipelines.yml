@@ -23,7 +23,7 @@ stages:
       - task: CmdLine@2
         inputs:
           script: |
-            su
-            sudo id
+            # su
+            # sudo id
             echo "Write your commands here"
-            # mvn -e -X -s /usr/share/maven/ref/settings.xml clean package deploy
+            mvn -s /usr/share/maven/ref/settings.xml clean package deploy
