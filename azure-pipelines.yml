@@ -10,10 +10,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  build.number: '$(Build.BuildId)'
+  buildNumber: '$(Build.BuildId)'
   registry.infra: docker.pkg.github.com/uanid/myserver
   registry.infra.key: Github-MyServer-Registry
-  registry.deploy: docker.pkg.github.com/uanid/notibot
+  registryDeploy: docker.pkg.github.com/uanid/notibot
 
 stages:
   - stage: Jar_Build_Deploy_Stage
@@ -27,6 +27,8 @@ stages:
         steps:
           - script: |
               mvn -s /usr/share/maven/ref/settings.xml clean deploy
+          - publish: target/
+            artifact: NotiApp
   - stage: Docker_Build_Stage
     displayName: Docker Image Build
     jobs:
@@ -35,11 +37,14 @@ stages:
         container:
           image: gitlab/dind:latest
         steps:
+          - download: current
+            artifact: NotiApp
+            patterns: "*.jar"
           - script: |
               ls -al
               pwd
               id
-              docker build -t ${registry.deploy}/notibot:${build.number} -t ${registry.deploy}/notibot:latest .
-              docker login ${registry.deploy} -u ${docker.username} -p ${docker.password}
-              docker push ${registry.deploy}/notibot:${build.number}
-              docker push ${registry.deploy}/notibot:latest
+              docker build -t ${registryDeploy}/notibot:${buildNumber} -t ${registryDeploy}/notibot:latest .
+              docker login ${registryDeploy} -u ${docker.username} -p ${docker.password}
+              docker push ${registryDeploy}/notibot:${buildNumber}
+              docker push ${registryDeploy}/notibot:latest
