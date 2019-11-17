@@ -51,18 +51,16 @@ public class AzpWebhookHandler {
         noti.setWhy(azpResource.getReason());
         noti.setBuildNumber((int) ((long) azpResource.getId()));
 
-        StringBuilder who = new StringBuilder();
         List<Request> requests = azpResource.getRequests();
         List<String> requestStr = requests.stream()
                 .map(Request::getRequestedFor)
                 .map(req -> req.getDisplayName() + "/" + req.getUniqueName())
                 .collect(Collectors.toList());
-        String flatStr = StringUtils.collectionToCommaDelimitedString(requestStr);
+        String who = StringUtils.collectionToCommaDelimitedString(requestStr);
         if (requests.size() != 1) {
-            flatStr = String.format("[%s]", flatStr);
+            who = String.format("[%s]", who);
         }
-        who.append(flatStr);
-        noti.setWho(who.toString());
+        noti.setWho(who);
 
         noti.setCommittedWho(azpResource.getLastChangedBy().getDisplayName() + "/" + azpResource.getLastChangedBy().getUniqueName());
 

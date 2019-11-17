@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -64,6 +65,15 @@ public class UserService {
     }
 
     public List<User> getSubscribedUsers(NotiChannel notiChannel) {
-        return userRepository.findAllBySubscribeChannelContaining(notiChannel);
+        List<User> subUsers = userRepository.findAllBySubscribeChannelContaining(notiChannel);
+        List<User> allSubUsers = userRepository.findAllByIsSubAllChannelEquals(true);
+
+        List<User> mergedUsers = new ArrayList<>(subUsers);
+        for (User user : allSubUsers) {
+            if (!mergedUsers.contains(user)) {
+                mergedUsers.add(user);
+            }
+        }
+        return mergedUsers;
     }
 }

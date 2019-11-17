@@ -14,7 +14,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author uanid
@@ -35,6 +37,7 @@ public class SenderService {
     public void sendNotification(Notification notification) {
         log.info("send notification");
         List<User> users = userService.getSubscribedUsers(notification.getChannel());
+
         users.forEach(user -> this.sendMessage(user, notification));
     }
 
@@ -47,12 +50,19 @@ public class SenderService {
         }
     }
 
-    private SendMessage buildTelegramMessage(long chatId, Notification noti) {
+    private SendMessage buildTelegramMessage(long chatId, Notification n) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
 
-        String text = String.format(R.TELEGRAM_MESSAGE_FORMAT, noti.getChannel().getName(), noti.getBuildNumber(), noti.getWhy(), noti.getWho(), noti.getRegTime().format(DateTimeFormatter.BASIC_ISO_DATE));
-        message.setText(text);
+        Map<String, String> values = new HashMap<>();
+        values.put("title", n.getFullMessage());
+        values.put("channel", n.getChannel().getName());
+        values.put("buildNumber", String.valueOf(n.getBuildNumber()));
+        values.put("reason", n.getWhy());
+        values.put("requestedFor", n.getCommittedWho());
+        values.put("regTime", n.getRegTime().format(R.MY_KOREAN_FORMAT));
+
+        message.setText(R.placeholder(R.TELEGRAM_MESSAGE_FORMAT, values));
         return message;
     }
 }

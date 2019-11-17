@@ -16,6 +16,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByChatId(long chatId);
     List<User> findAllBySubscribeChannelContaining(NotiChannel notiChannel);
+    List<User> findAllByIsSubAllChannelEquals(boolean isSubAllChannel);
 
     @Query(value = "delete from user_subscribe_channel where user_user_id = ?1 and subscribe_channel_channel_id = ?2", nativeQuery = true)
     void deleteSubscribeChannel(long userId, long channelId);

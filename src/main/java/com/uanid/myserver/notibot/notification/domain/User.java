@@ -38,5 +38,6 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<NotiChannel> subscribeChannel;
 
+    @Basic
     private boolean isSubAllChannel;
 }

@@ -24,11 +24,6 @@
 			<name>GitHub Uanid Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/uanid/notibot</url>
 		</repository>
-		<snapshotRepository>
-			<id>github</id>
-			<name>GitHub Uanid Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/uanid/notibot</url>
-		</snapshotRepository>
 	</distributionManagement>
 
 	<dependencies>
