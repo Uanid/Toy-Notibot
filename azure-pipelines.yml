@@ -10,10 +10,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildNumber: '$(Build.BuildId)'
-  dockerInfraRegistry: docker.pkg.github.com/uanid/myserver
-  dockerDeployRegistry: docker.pkg.github.com/uanid/notibot
-  dockerRegistryKey: Github-MyServer-Registry
+  build.number: '$(Build.BuildId)'
+  registry.infra: docker.pkg.github.com/uanid/myserver
+  registry.infra.key: Github-MyServer-Registry
+  registry.deploy: docker.pkg.github.com/uanid/notibot
 
 stages:
   - stage: Jar_Build_Deploy_Stage
@@ -22,8 +22,8 @@ stages:
     - job: Jar_Build_Job
       displayName: Build and Deploy Jar Job
       container:
-        image: ${registry}/my-maven:latest
-        endpoint: ${dockerRegistryKey}
+        image: ${registry.infra}/my-maven:latest
+        endpoint: ${registry.infra.key}
       steps:
       - script: |
             mvn -s /usr/share/maven/ref/settings.xml clean deploy
@@ -39,7 +39,7 @@ stages:
             ls -al
             pwd
             id
-            docker build -t ${dockerDeployRegistry}/notibot:${buildNumber} -t ${dockerDeployRegistry}/notibot:latest .
-            docker login ${dockerDeployRegistry} -u ${dockerUsername} -p ${dockerPassword}
-            docker push ${dockerDeployRegistry}/notibot:${buildNumber}
-            docker push ${dockerDeployRegistry}/notibot:latest
+            docker build -t ${registry.deploy}/notibot:${build.number} -t ${registry.deploy}/notibot:latest .
+            docker login ${registry.deploy} -u ${docker.username} -p ${docker.password}
+            docker push ${registry.deploy}/notibot:${build.number}
+            docker push ${registry.deploy}/notibot:latest
