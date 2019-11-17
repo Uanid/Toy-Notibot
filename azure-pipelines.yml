@@ -22,7 +22,7 @@ stages:
       - job: Jar_Build_Job
         displayName: Build and Deploy Jar Job
         container:
-          image: ${registry.infra}/my-maven:latest
+          image: docker.pkg.github.com/uanid/myserver/my-maven:latest
           endpoint: Github-MyServer-Registry
         steps:
           - script: |
