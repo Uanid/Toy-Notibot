@@ -37,7 +37,6 @@ stages:
         container:
           image: gitlab/dind:latest
         steps:
-          - checkout: none
           - download: current
             artifact: NotiApp
             patterns: "*.jar"
