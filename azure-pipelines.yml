@@ -41,11 +41,12 @@ stages:
             artifact: NotiApp
             patterns: "*.jar"
           - script: |
-              ls -al /home/vsts/work/1/NotiApp
+              ls -al ..
+              ls -al ../NotiApp
               ls -al
               pwd
               id
-              docker build -t ${registryDeploy}/notibot:${buildNumber} -t ${registryDeploy}/notibot:latest .
-              docker login ${registryDeploy} -u ${docker.username} -p ${docker.password}
-              docker push ${registryDeploy}/notibot:${buildNumber}
-              docker push ${registryDeploy}/notibot:latest
+              docker build -t $(registryDeploy)/notibot:$(buildNumber) -t $(registryDeploy)/notibot:latest .
+              docker login $(registryDeploy) -u $(docker.username) -p $(docker.password)
+              docker push $(registryDeploy)/notibot:$(buildNumber)
+              docker push $(registryDeploy)/notibot:latest
