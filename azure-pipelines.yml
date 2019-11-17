@@ -9,16 +9,37 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  buildNumber: '$(Build.BuildId)'
+  dockerInfraRegistry: docker.pkg.github.com/uanid/myserver
+  dockerDeployRegistry: docker.pkg.github.com/uanid/notibot
+  dockerRegistryKey: Github-MyServer-Registry
+
 stages:
-  - stage: Build_Stage
-    displayName: My First Build Stage
+  - stage: Jar_Build_Deploy_Stage
+    displayName: Build and Deploy Jar
     jobs:
-    - job: Build_Job
-      displayName: My First Build Job
+    - job: Jar_Build_Job
+      displayName: Build and Deploy Jar Job
       container:
-        image: docker.pkg.github.com/uanid/myserver/my-maven:latest
-        endpoint: Github-MyServer-Registry
+        image: ${registry}/my-maven:latest
+        endpoint: ${dockerRegistryKey}
       steps:
       - script: |
-            echo "Write your commands here"
             mvn -s /usr/share/maven/ref/settings.xml clean deploy
+  - stage: Docker_Build_Stage
+    displayName: Docker Image Build
+    jobs:
+      - job: Docker_Build_Job
+        displayName: Docker Image Build
+        container:
+          image: gitlab/dind:latest
+        steps:
+          script: |
+            ls -al
+            pwd
+            id
+            docker build -t ${dockerDeployRegistry}/notibot:${buildNumber} -t ${dockerDeployRegistry}/notibot:latest .
+            docker login ${dockerDeployRegistry} -u ${dockerUsername} -p ${dockerPassword}
+            docker push ${dockerDeployRegistry}/notibot:${buildNumber}
+            docker push ${dockerDeployRegistry}/notibot:latest
