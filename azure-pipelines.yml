@@ -41,6 +41,7 @@ stages:
             artifact: NotiApp
             patterns: "*.jar"
           - script: |
+              ls -al /home/vsts/work/1/NotiApp
               ls -al
               pwd
               id
