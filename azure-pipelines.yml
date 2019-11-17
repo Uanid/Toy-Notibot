@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- master
+  - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -19,14 +19,14 @@ stages:
   - stage: Jar_Build_Deploy_Stage
     displayName: Build and Deploy Jar
     jobs:
-    - job: Jar_Build_Job
-      displayName: Build and Deploy Jar Job
-      container:
-        image: ${registry.infra}/my-maven:latest
-        endpoint: ${registry.infra.key}
-      steps:
-      - script: |
-            mvn -s /usr/share/maven/ref/settings.xml clean deploy
+      - job: Jar_Build_Job
+        displayName: Build and Deploy Jar Job
+        container:
+          image: ${registry.infra}/my-maven:latest
+          endpoint: Github-MyServer-Registry
+        steps:
+          - script: |
+              mvn -s /usr/share/maven/ref/settings.xml clean deploy
   - stage: Docker_Build_Stage
     displayName: Docker Image Build
     jobs:
@@ -35,11 +35,11 @@ stages:
         container:
           image: gitlab/dind:latest
         steps:
-          script: |
-            ls -al
-            pwd
-            id
-            docker build -t ${registry.deploy}/notibot:${build.number} -t ${registry.deploy}/notibot:latest .
-            docker login ${registry.deploy} -u ${docker.username} -p ${docker.password}
-            docker push ${registry.deploy}/notibot:${build.number}
-            docker push ${registry.deploy}/notibot:latest
+          - script: |
+              ls -al
+              pwd
+              id
+              docker build -t ${registry.deploy}/notibot:${build.number} -t ${registry.deploy}/notibot:latest .
+              docker login ${registry.deploy} -u ${docker.username} -p ${docker.password}
+              docker push ${registry.deploy}/notibot:${build.number}
+              docker push ${registry.deploy}/notibot:latest
