@@ -37,15 +37,13 @@ stages:
         container:
           image: gitlab/dind:latest
         steps:
+          - checkout: none
           - download: current
             artifact: NotiApp
             patterns: "*.jar"
           - script: |
-              ls -al ..
-              ls -al ../NotiApp
+              cp ../NotiApp/*.jar .
               ls -al
-              pwd
-              id
               docker build -t $(registryDeploy)/notibot:$(buildNumber) -t $(registryDeploy)/notibot:latest .
               docker login $(registryDeploy) -u $(docker.username) -p $(docker.password)
               docker push $(registryDeploy)/notibot:$(buildNumber)

@@ -2,7 +2,7 @@ FROM openjdk:8
 MAINTAINER uanid@outlook.com
 
 WORKDIR /usr/local/notibot
-COPY target/*.jar notibot.jar
+COPY *.jar notibot.jar
 COPY application.properties application.properties
 RUN chmod 777 application.properties
 
