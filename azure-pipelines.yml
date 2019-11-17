@@ -42,9 +42,7 @@ stages:
             patterns: "*.jar"
           - script: |
               cp ../NotiApp/*.jar .
-              ls -al
               docker build -t $(registryDeploy)/notibot:$(buildNumber) -t $(registryDeploy)/notibot:latest .
-              docker images
               docker login $(registryDeploy) -u $(docker.username) -p $(docker.password)
               docker push $(registryDeploy)/notibot:$(buildNumber)
               docker push $(registryDeploy)/notibot:latest
