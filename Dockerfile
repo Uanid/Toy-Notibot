@@ -8,4 +8,4 @@ RUN chmod 777 application.properties
 
 EXPOSE 8080
 
-ENTRYPOINT ["java -Dfile.encoding=utf-8 -jar notibot.jar"]
+ENTRYPOINT ["java", "-Dfile.encoding=utf-8", "-jar", "notibot.jar"]
