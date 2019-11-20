@@ -6,6 +6,9 @@ COPY *.jar notibot.jar
 COPY src/main/resources/application.properties application.properties
 RUN chmod 777 application.properties
 
+COPY entrypoint.sh entrypoint.sh
+RUN chmod 777 entrypoint.sh
+
 EXPOSE 8080
 
-ENTRYPOINT "java -Dfile.encoding=utf-8 -jar notibot.jar"
+ENTRYPOINT ["entrypoint.sh"]
