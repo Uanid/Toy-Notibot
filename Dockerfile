@@ -11,4 +11,4 @@ RUN chmod 777 entrypoint.sh
 
 EXPOSE 8080
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
