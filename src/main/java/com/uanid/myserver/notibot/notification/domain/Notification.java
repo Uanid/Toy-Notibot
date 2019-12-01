@@ -48,7 +48,7 @@ public class Notification {
     @Column(nullable = false)
     private int buildNumber;
 
-    @Column(length = 255, nullable = false)
+    @Column(columnDefinition = "text()", nullable = false)
     private String fullMessage;
 
     @CreationTimestamp
