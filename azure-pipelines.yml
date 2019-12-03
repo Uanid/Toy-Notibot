@@ -31,7 +31,7 @@ stages:
           - script: |
               ls -al $HOME/.m2/
               cat $HOME/.m2/settings.xml
-              mvn -s /usr/share/maven/ref/settings.xml clean deploy
+              mvn clean deploy
           - publish: target/
             artifact: NotiApp
   - stage: Docker_Build_Stage
