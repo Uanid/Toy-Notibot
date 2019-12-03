@@ -27,11 +27,10 @@ stages:
         steps:
           - task: MavenAuthenticate@0
             inputs:
-              artifactsFeeds: 'uanid'
               mavenServiceConnections: 'Github MyServer Repository'
           - script: |
-              ls -al /usr/share/maven/ref/
-              cat /usr/share/maven/ref/settings.xml
+              ls -al $HOME/.m2/
+              cat $HOME/.m2/settings.xml
               mvn -s /usr/share/maven/ref/settings.xml clean deploy
           - publish: target/
             artifact: NotiApp
