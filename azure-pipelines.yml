@@ -25,7 +25,13 @@ stages:
           image: docker.pkg.github.com/uanid/myserver/my-maven:latest
           endpoint: Github-MyServer-Registry
         steps:
+          - task: MavenAuthenticate@0
+            inputs:
+              artifactsFeeds: 'uanid'
+              mavenServiceConnections: 'Github MyServer Repository'
           - script: |
+              ls -al /usr/share/maven/ref/
+              cat /usr/share/maven/ref/settings.xml
               mvn -s /usr/share/maven/ref/settings.xml clean deploy
           - publish: target/
             artifact: NotiApp
