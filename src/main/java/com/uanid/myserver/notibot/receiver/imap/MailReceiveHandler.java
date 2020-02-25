@@ -1,4 +1,4 @@
-package com.uanid.myserver.notibot.receiver.bamboo;
+package com.uanid.myserver.notibot.receiver.imap;
 
 import com.google.common.base.Preconditions;
 import com.uanid.myserver.notibot.NotibotException;

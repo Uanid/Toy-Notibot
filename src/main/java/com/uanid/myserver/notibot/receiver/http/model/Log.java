@@ -1,5 +1,5 @@
 
-package com.uanid.myserver.notibot.receiver.azp.model;
+package com.uanid.myserver.notibot.receiver.http.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,6 @@ import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "location",
     "type",
     "url",
     "downloadUrl"
@@ -18,10 +17,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Drop {
+public class Log {
 
-    @JsonProperty("location")
-    private String location;
     @JsonProperty("type")
     private String type;
     @JsonProperty("url")

@@ -7,7 +7,7 @@ import static com.uanid.myserver.notibot.notification.domain.ReceiverType.*;
  * @since 2019-11-14
  */
 public enum NotificationType {
-    SUCCEEDED, PARTIALLY_SUCCEEDED(AZP), FAILED, STOPPED(AZP), OTHER, CANNOT_UNDERSTAND;
+    SUCCEEDED, PARTIALLY_SUCCEEDED(AZP), FAILED, STOPPED(AZP), OTHER, CANNOT_UNDERSTAND, LOGGED_IN(MESSAGE);
 
     private ReceiverType[] support;
 

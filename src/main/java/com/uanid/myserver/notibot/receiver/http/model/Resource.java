@@ -1,5 +1,5 @@
 
-package com.uanid.myserver.notibot.receiver.azp.model;
+package com.uanid.myserver.notibot.receiver.http.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,5 @@
 
-package com.uanid.myserver.notibot.receiver.azp.model;
+package com.uanid.myserver.notibot.receiver.http.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,23 +10,20 @@ import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "queueType",
     "id",
-    "name",
-    "url"
+    "url",
+    "requestedFor"
 })
 @Getter
 @Setter
 @ToString
-public class Queue {
+public class Request {
 
-    @JsonProperty("queueType")
-    private String queueType;
     @JsonProperty("id")
     private Long id;
-    @JsonProperty("name")
-    private String name;
     @JsonProperty("url")
     private String url;
+    @JsonProperty("requestedFor")
+    private RequestedFor requestedFor;
 
 }

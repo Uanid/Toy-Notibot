@@ -1,5 +1,5 @@
 
-package com.uanid.myserver.notibot.receiver.azp.model;
+package com.uanid.myserver.notibot.receiver.http.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,13 +10,14 @@ import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id"
+    "text"
 })
 @Getter
 @Setter
 @ToString
-public class Collection {
+public class DetailedMessage {
 
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("text")
+    private String text;
+
 }

@@ -1,25 +1,21 @@
-package com.uanid.myserver.notibot.receiver.azp;
+package com.uanid.myserver.notibot.receiver.http;
 
 import com.uanid.myserver.notibot.notification.domain.NotiChannel;
 import com.uanid.myserver.notibot.notification.domain.Notification;
 import com.uanid.myserver.notibot.notification.domain.NotificationType;
 import com.uanid.myserver.notibot.notification.domain.ReceiverType;
 import com.uanid.myserver.notibot.receiver.ReceiverService;
-import com.uanid.myserver.notibot.receiver.azp.model.AzpWebhook;
-import com.uanid.myserver.notibot.receiver.azp.model.Definition;
-import com.uanid.myserver.notibot.receiver.azp.model.Request;
-import com.uanid.myserver.notibot.receiver.azp.model.Resource;
+import com.uanid.myserver.notibot.receiver.http.model.AzpWebhook;
+import com.uanid.myserver.notibot.receiver.http.model.Definition;
+import com.uanid.myserver.notibot.receiver.http.model.Request;
+import com.uanid.myserver.notibot.receiver.http.model.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,14 +24,14 @@ import java.util.stream.Collectors;
  * @since 2019-11-13
  */
 @Slf4j
-@Controller
-public class AzpWebhookHandler {
+@RestController
+@RequestMapping("/")
+public class HttpEndPoint {
 
     @Autowired
     private ReceiverService receiverService;
 
-    @RequestMapping("/**")
-    @ResponseBody
+    @RequestMapping(value = {"", "/noti/azp"})
     public String listen(HttpServletRequest request, @RequestBody AzpWebhook azpWebhook) {
         Notification noti = new Notification();
         noti.setFullMessage(azpWebhook.getDetailedMessage().getText());
@@ -64,6 +60,23 @@ public class AzpWebhookHandler {
 
         noti.setCommittedWho(azpResource.getLastChangedBy().getDisplayName() + "/" + azpResource.getLastChangedBy().getUniqueName());
 
+        receiverService.postNotification(noti);
+        return "Cheer up!";
+    }
+
+    @RequestMapping("/noti/loggedin")
+    public String message(@RequestParam String message,
+                          @RequestParam String who,
+                          @RequestParam String channel) {
+        Notification noti = new Notification();
+        noti.setChannel(new NotiChannel(channel));
+        noti.setNotificationType(NotificationType.LOGGED_IN);
+        noti.setReceiverType(ReceiverType.MESSAGE);
+        noti.setWho(who);
+        noti.setCommittedWho(who);
+        noti.setWhy("Someone Logged In");
+        noti.setBuildNumber(0);
+        noti.setFullMessage(message);
         receiverService.postNotification(noti);
         return "Cheer up!";
     }

@@ -1,5 +1,5 @@
 
-package com.uanid.myserver.notibot.receiver.azp.model;
+package com.uanid.myserver.notibot.receiver.http.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,9 +15,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Account {
+public class Project {
 
     @JsonProperty("id")
     private String id;
-
 }
