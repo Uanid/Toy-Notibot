@@ -13,7 +13,7 @@ variables:
   buildNumber: '$(Build.BuildId)'
   registry.infra: docker.pkg.github.com/uanid/myserver
   registry.infra.key: Github-MyServer-Registry
-  registryDeploy: docker.pkg.github.com/uanid/notibot
+  registryDeploy: ncpr.kr.ncr.ntruss.com
 
 stages:
   - stage: Jar_Build_Deploy_Stage
